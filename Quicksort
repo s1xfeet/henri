@@ -1,0 +1,52 @@
+def quicksort(nums, start=0, end=None):
+    # print('quicksort', nums, start, end)
+    
+    # create a copy of the list initially, but never again
+    if end is None:
+        nums = list(nums) 
+        
+        # final valid index
+        end = len(nums) - 1 
+        
+    # check if you have at least 2 elements to partition
+    if start < end: 
+        # gets a slice of the original list and returns the pivot element
+        pivot = partition(nums, start, end)
+        #left, right
+        quicksort(nums, start, pivot-1) 
+        quicksort(nums, pivot+1, end)
+
+    return nums
+    
+    def partition(nums, start=0, end=None):
+    # print('partition', nums, start, end)
+    if end is None:
+        end = len(nums) - 1
+    
+    # Initialize right and left pointers
+    # end-1 because partition pointer is at the end, so you start 1 element to the left
+    l, r = start, end-1
+    
+    # Iterate while they're apart
+    while r > l:
+        # print('  ', nums, l, r)
+        # Increment left pointer if number is less or equal to pivot
+        if nums[l] <= nums[end]:
+            # this element is in the right spot, go to the next index
+            l += 1
+        
+        # Decrement right pointer if number is greater than pivot
+        elif nums[r] > nums[end]:
+            # this element is in the right spot, go to the previous index
+            r -= 1
+        
+        # Two out-of-place elements found, swap them
+        else:
+            nums[l], nums[r] = nums[r], nums[l]
+    # print('  ', nums, l, r)
+    # Place the pivot between the two parts and returns the position of the pivot
+    if nums[l] > nums[end]:
+        nums[l], nums[end] = nums[end], nums[l]
+        return l
+    else:
+        return end
